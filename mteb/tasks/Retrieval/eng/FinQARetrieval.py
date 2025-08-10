@@ -1,50 +1,33 @@
 from __future__ import annotations
 
-from mteb.abstasks.AbsTaskRetrieval import AbsTaskRetrieval
+from mteb.abstasks.TaskMetadata import TaskMetadata
+
+from ....abstasks.AbsTaskRetrieval import AbsTaskRetrieval
 
 
 class FinQARetrieval(AbsTaskRetrieval):
-    metadata = {
-        "name": "FinQARetrieval",
-        "description": "FinQA is a dataset for financial question answering with numerical reasoning over financial documents.",
-        "reference": "https://arxiv.org/abs/2109.00122",
-        "dataset": {
-            "path": "zeroshot/finqa-embedding-benchmark",
-            "revision": "6b8d9d3df88b8b3eb7ec64e5e87e5b3076c16e3a",
+    metadata = TaskMetadata(
+        name="FinQARetrieval",
+        description="Large-scale dataset focused on financial reasoning, containing 2.8k financial reports and 8k question-and-answer pairs",
+        reference="https://huggingface.co/datasets/embedding-benchmark/FinQA",
+        dataset={
+            "path": "embedding-benchmark/FinQA",
+            "revision": "bdd1903",
             "trust_remote_code": True,
         },
-        "type": "Retrieval",
-        "category": "s2p",
-        "modalities": ["text"],
-        "eval_splits": ["test"],
-        "eval_langs": ["eng-Latn"],
-        "main_score": "ndcg_at_10",
-        "revision": "6b8d9d3df88b8b3eb7ec64e5e87e5b3076c16e3a",
-        "domains": ["Finance"],
-        "task_subtypes": ["Question answering"],
-        "license": "mit",
-        "annotations_creators": "derived",
-        "dialect": [],
-        "sample_creation": "found",
-        "bibtex_citation": """@article{chen2021finqa,
-  title={FinQA: A Dataset of Numerical Reasoning over Financial Data},
-  author={Chen, Zhiyu and Chen, Wenhu and Smiley, Charese and Shah, Sameena and Borova, Iana and Langdon, Dylan and Moussa, Reema and Beane, Matt and Huang, Ting-Hao and Routledge, Bryan and Wang, William Yang},
-  journal={arXiv preprint arXiv:2109.00122},
-  year={2021}
-}""",
-        "descriptive_stats": {
-            "n_samples": {"test": 1138},
-            "avg_character_length": {
-                "test": {
-                    "average_document_length": 5679.147631043956,
-                    "average_query_length": 125.55009649122808,
-                    "num_documents": 380,
-                    "num_queries": 1138,
-                    "average_relevant_docs_per_query": 1.0,
-                }
-            },
-        },
-    }
+        type="Retrieval",
+        category="s2p",
+        modalities=["text"],
+        eval_splits=["test"],
+        eval_langs=["eng-Latn"],
+        main_score="ndcg_at_10",
+        domains=["Finance"],
+        task_subtypes=["Question answering"],
+        license="mit",
+        annotations_creators="derived",
+        dialect=[],
+        sample_creation="found",
+    )
 
     def load_data(self, **kwargs):
         if self.data_loaded:
