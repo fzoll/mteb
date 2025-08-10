@@ -1,50 +1,33 @@
 from __future__ import annotations
 
-from mteb.abstasks.AbsTaskRetrieval import AbsTaskRetrieval
+from mteb.abstasks.TaskMetadata import TaskMetadata
+
+from ....abstasks.AbsTaskRetrieval import AbsTaskRetrieval
 
 
 class HC3FinanceRetrieval(AbsTaskRetrieval):
-    metadata = {
-        "name": "HC3FinanceRetrieval",
-        "description": "HC3 Finance dataset for retrieval evaluation in financial domain.",
-        "reference": "https://arxiv.org/abs/2301.07597",
-        "dataset": {
-            "path": "zeroshot/hc3finance-embedding-benchmark",
-            "revision": "5e5d4171b86e0bb96b57159d991cbbbd73efcac0",
+    metadata = TaskMetadata(
+        name="HC3FinanceRetrieval",
+        description="Text retrieval collection focused on comparing human and AI-generated responses across various domains, particularly in finance",
+        reference="https://huggingface.co/datasets/embedding-benchmark/HC3Finance",
+        dataset={
+            "path": "embedding-benchmark/HC3Finance",
+            "revision": "fda6fad",
             "trust_remote_code": True,
         },
-        "type": "Retrieval",
-        "category": "s2p",
-        "modalities": ["text"],
-        "eval_splits": ["test"],
-        "eval_langs": ["eng-Latn"],
-        "main_score": "ndcg_at_10",
-        "revision": "5e5d4171b86e0bb96b57159d991cbbbd73efcac0",
-        "domains": ["Finance"],
-        "task_subtypes": ["Question answering"],
-        "license": "cc-by-sa-4.0",
-        "annotations_creators": "derived",
-        "dialect": [],
-        "sample_creation": "found",
-        "bibtex_citation": """@article{guo2023close,
-  title={How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection},
-  author={Guo, Biyang and Zhang, Xin and Yang, Zhiqi and Shi, Minqi and Wang, Tianxing and Yu, Dayiheng and Yao, Yuancheng},
-  journal={arXiv preprint arXiv:2301.07597},
-  year={2023}
-}""",
-        "descriptive_stats": {
-            "n_samples": {"test": 415},
-            "avg_character_length": {
-                "test": {
-                    "average_document_length": 748.9036144578313,
-                    "average_query_length": 88.04819277108433,
-                    "num_documents": 415,
-                    "num_queries": 415,
-                    "average_relevant_docs_per_query": 1.0,
-                }
-            },
-        },
-    }
+        type="Retrieval",
+        category="s2p",
+        modalities=["text"],
+        eval_splits=["test"],
+        eval_langs=["eng-Latn"],
+        main_score="ndcg_at_10",
+        domains=["Finance"],
+        task_subtypes=["Question answering"],
+        license="cc-by-sa-4.0",
+        annotations_creators="derived",
+        dialect=[],
+        sample_creation="found",
+    )
 
     def load_data(self, **kwargs):
         if self.data_loaded:
