@@ -1,50 +1,32 @@
 from __future__ import annotations
 
-from mteb.abstasks.AbsTaskRetrieval import AbsTaskRetrieval
+from mteb.abstasks.TaskMetadata import TaskMetadata
+
+from ....abstasks.AbsTaskRetrieval import AbsTaskRetrieval
 
 
 class MBPPRetrieval(AbsTaskRetrieval):
-    metadata = {
-        "name": "MBPPRetrieval",
-        "description": "MBPP (Mostly Basic Python Problems) dataset adapted for code retrieval evaluation.",
-        "reference": "https://arxiv.org/abs/2108.07732",
-        "dataset": {
-            "path": "zeroshot/mbpp-embedding-benchmark",
-            "revision": "5e5d4171b86e0bb96b57159d991cbbbd73efcac0",
+    metadata = TaskMetadata(
+        name="MBPPRetrieval",
+        description="Approximately 1,000 Python programming problems designed for entry-level programmers",
+        reference="https://huggingface.co/datasets/embedding-benchmark/MBPP",
+        dataset={
+            "path": "embedding-benchmark/MBPP",
             "trust_remote_code": True,
         },
-        "type": "Retrieval",
-        "category": "s2s",
-        "modalities": ["text"],
-        "eval_splits": ["test"],
-        "eval_langs": ["eng-Latn"],
-        "main_score": "ndcg_at_10",
-        "revision": "5e5d4171b86e0bb96b57159d991cbbbd73efcac0",
-        "domains": ["Programming"],
-        "task_subtypes": ["Code retrieval"],
-        "license": "cc-by-4.0",
-        "annotations_creators": "derived",
-        "dialect": [],
-        "sample_creation": "found",
-        "bibtex_citation": """@article{austin2021program,
-  title={Program Synthesis with Large Language Models},
-  author={Austin, Jacob and Odena, Augustus and Nye, Maxwell I and Bosma, Maarten and Michalewski, Henryk and Dohan, David and Jiang, Ellen and Cai, Carrie J and Terry, Michael and Le, Quoc V and others},
-  journal={arXiv preprint arXiv:2108.07732},
-  year={2021}
-}""",
-        "descriptive_stats": {
-            "n_samples": {"test": 974},
-            "avg_character_length": {
-                "test": {
-                    "average_document_length": 153.27505133470226,
-                    "average_query_length": 76.52773375128041,
-                    "num_documents": 974,
-                    "num_queries": 974,
-                    "average_relevant_docs_per_query": 1.0,
-                }
-            },
-        },
-    }
+        type="Retrieval",
+        category="s2s",
+        modalities=["text"],
+        eval_splits=["test"],
+        eval_langs=["eng-Latn"],
+        main_score="ndcg_at_10",
+        domains=["Programming"],
+        task_subtypes=["Code retrieval"],
+        license="cc-by-4.0",
+        annotations_creators="derived",
+        dialect=[],
+        sample_creation="found",
+    )
 
     def load_data(self, **kwargs):
         if self.data_loaded:
