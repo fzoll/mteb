@@ -21,12 +21,14 @@ class HC3FinanceRetrieval(AbsTaskRetrieval):
         eval_splits=["test"],
         eval_langs=["eng-Latn"],
         main_score="ndcg_at_10",
+        date=("2023-01-01", "2023-12-31"),
         domains=["Finance"],
         task_subtypes=["Question answering"],
         license="cc-by-sa-4.0",
         annotations_creators="derived",
         dialect=[],
         sample_creation="found",
+        bibtex_citation="",
     )
 
     def load_data(self, **kwargs):
