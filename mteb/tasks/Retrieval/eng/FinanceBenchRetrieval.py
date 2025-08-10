@@ -1,50 +1,33 @@
 from __future__ import annotations
 
-from mteb.abstasks.AbsTaskRetrieval import AbsTaskRetrieval
+from mteb.abstasks.TaskMetadata import TaskMetadata
+
+from ....abstasks.AbsTaskRetrieval import AbsTaskRetrieval
 
 
 class FinanceBenchRetrieval(AbsTaskRetrieval):
-    metadata = {
-        "name": "FinanceBenchRetrieval",
-        "description": "FinanceBench is a financial question answering dataset with 10,231 questions over 3,024 financial documents.",
-        "reference": "https://arxiv.org/abs/2311.11944",
-        "dataset": {
-            "path": "zeroshot/financebench-embedding-benchmark",
-            "revision": "5e5d4171b86e0bb96b57159d991cbbbd73efcac0",
+    metadata = TaskMetadata(
+        name="FinanceBenchRetrieval",
+        description="Text retrieval dataset focused on financial domain question-answering, derived from PatronusAI/financebench-test with only PASS examples",
+        reference="https://huggingface.co/datasets/embedding-benchmark/FinanceBench",
+        dataset={
+            "path": "embedding-benchmark/FinanceBench",
+            "revision": "e684784",
             "trust_remote_code": True,
         },
-        "type": "Retrieval",
-        "category": "s2p",
-        "modalities": ["text"],
-        "eval_splits": ["test"],
-        "eval_langs": ["eng-Latn"],
-        "main_score": "ndcg_at_10",
-        "revision": "5e5d4171b86e0bb96b57159d991cbbbd73efcac0",
-        "domains": ["Finance"],
-        "task_subtypes": ["Question answering"],
-        "license": "cc-by-4.0",
-        "annotations_creators": "derived",
-        "dialect": [],
-        "sample_creation": "found",
-        "bibtex_citation": """@article{islam2023financebench,
-  title={FinanceBench: A New Benchmark for Financial Question Answering},
-  author={Islam, Pranab and Kannappan, Anand and Kiela, Douwe and Schoelkopf, Rebecca and Qiu, Zejiang and Shabani, Pedram and Chakravarti, Mrinmaya},
-  journal={arXiv preprint arXiv:2311.11944},
-  year={2023}
-}""",
-        "descriptive_stats": {
-            "n_samples": {"test": 150},
-            "avg_character_length": {
-                "test": {
-                    "average_document_length": 42534.20689655172,
-                    "average_query_length": 107.79333333333334,
-                    "num_documents": 145,
-                    "num_queries": 150,
-                    "average_relevant_docs_per_query": 1.0,
-                }
-            },
-        },
-    }
+        type="Retrieval",
+        category="s2p",
+        modalities=["text"],
+        eval_splits=["test"],
+        eval_langs=["eng-Latn"],
+        main_score="ndcg_at_10",
+        domains=["Finance"],
+        task_subtypes=["Question answering"],
+        license="cc-by-4.0",
+        annotations_creators="derived",
+        dialect=[],
+        sample_creation="found",
+    )
 
     def load_data(self, **kwargs):
         if self.data_loaded:
