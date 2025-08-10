@@ -1,50 +1,32 @@
 from __future__ import annotations
 
-from mteb.abstasks.AbsTaskRetrieval import AbsTaskRetrieval
+from mteb.abstasks.TaskMetadata import TaskMetadata
+
+from ....abstasks.AbsTaskRetrieval import AbsTaskRetrieval
 
 
 class DS1000Retrieval(AbsTaskRetrieval):
-    metadata = {
-        "name": "DS1000Retrieval",
-        "description": "DS-1000 is a code generation dataset focused on data science tasks, adapted for retrieval evaluation.",
-        "reference": "https://arxiv.org/abs/2211.11501",
-        "dataset": {
-            "path": "zeroshot/ds1000-embedding-benchmark",
-            "revision": "5e5d4171b86e0bb96b57159d991cbbbd73efcac0",
+    metadata = TaskMetadata(
+        name="DS1000Retrieval",
+        description="Code generation benchmark with a thousand data science problems",
+        reference="https://huggingface.co/datasets/embedding-benchmark/DS1000",
+        dataset={
+            "path": "embedding-benchmark/DS1000",
             "trust_remote_code": True,
         },
-        "type": "Retrieval",
-        "category": "s2s",
-        "modalities": ["text"],
-        "eval_splits": ["test"],
-        "eval_langs": ["eng-Latn"],
-        "main_score": "ndcg_at_10",
-        "revision": "5e5d4171b86e0bb96b57159d991cbbbd73efcac0",
-        "domains": ["Programming"],
-        "task_subtypes": ["Code retrieval"],
-        "license": "mit",
-        "annotations_creators": "derived",
-        "dialect": [],
-        "sample_creation": "found",
-        "bibtex_citation": """@article{lai2022ds,
-  title={DS-1000: A Natural and Reliable Benchmark for Data Science Code Generation},
-  author={Lai, Yuhang and Li, Chengxi and Wang, Yiming and Zhang, Tianyi and Zhong, Ruiqi and Zettlemoyer, Luke and Yih, Scott Wen-tau and Fried, Daniel and Wang, Sida I and Yu, Tao},
-  journal={arXiv preprint arXiv:2211.11501},
-  year={2022}
-}""",
-        "descriptive_stats": {
-            "n_samples": {"test": 1998},
-            "avg_character_length": {
-                "test": {
-                    "average_document_length": 260.2947947947948,
-                    "average_query_length": 419.0765765765766,
-                    "num_documents": 1998,
-                    "num_queries": 1998,
-                    "average_relevant_docs_per_query": 1.0,
-                }
-            },
-        },
-    }
+        type="Retrieval",
+        category="s2s",
+        modalities=["text"],
+        eval_splits=["test"],
+        eval_langs=["eng-Latn"],
+        main_score="ndcg_at_10",
+        domains=["Programming"],
+        task_subtypes=["Code retrieval"],
+        license="mit",
+        annotations_creators="derived",
+        dialect=[],
+        sample_creation="found",
+    )
 
     def load_data(self, **kwargs):
         if self.data_loaded:
