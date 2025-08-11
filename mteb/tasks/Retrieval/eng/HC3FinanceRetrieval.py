@@ -21,7 +21,7 @@ class HC3FinanceRetrieval(AbsTaskRetrieval):
         eval_langs=["eng-Latn"],
         main_score="ndcg_at_10",
         date=("2023-01-01", "2023-12-31"),
-        domains=["Finance"],
+        domains=["Financial"],
         task_subtypes=["Question answering"],
         license="cc-by-sa-4.0",
         annotations_creators="derived",
@@ -33,10 +33,6 @@ class HC3FinanceRetrieval(AbsTaskRetrieval):
     def load_data(self, **kwargs):
         if self.data_loaded:
             return
-
-        self.corpus = {}
-        self.queries = {}
-        self.relevant_docs = {}
 
         from datasets import load_dataset
 
@@ -57,19 +53,29 @@ class HC3FinanceRetrieval(AbsTaskRetrieval):
             revision=self.metadata.dataset["revision"],
         )["test"]
 
+        # Initialize data structures with 'test' split
+        corpus = {}
+        queries = {}
+        relevant_docs = {}
+
         # Process corpus
         for item in corpus_ds:
-            self.corpus[item["id"]] = {"title": "", "text": item["text"]}
+            corpus[item["id"]] = {"title": "", "text": item["text"]}
 
         # Process queries
         for item in queries_ds:
-            self.queries[item["id"]] = item["text"]
+            queries[item["id"]] = item["text"]
 
         # Process qrels (relevant documents)
         for item in qrels_ds:
             query_id = item["query-id"]
-            if query_id not in self.relevant_docs:
-                self.relevant_docs[query_id] = {}
-            self.relevant_docs[query_id][item["corpus-id"]] = item["score"]
+            if query_id not in relevant_docs:
+                relevant_docs[query_id] = {}
+            relevant_docs[query_id][item["corpus-id"]] = int(item["score"])
+
+        # Organize data by splits as expected by MTEB
+        self.corpus = {"test": corpus}
+        self.queries = {"test": queries}
+        self.relevant_docs = {"test": relevant_docs}
 
         self.data_loaded = True
