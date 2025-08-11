@@ -9,10 +9,10 @@ class FreshStackRetrieval(AbsTaskRetrieval):
     metadata = TaskMetadata(
         name="FreshStackRetrieval",
         description="FreshStack dataset for retrieval tasks focusing on technical documentation and knowledge base content",
-        reference="https://huggingface.co/datasets/embedding-benchmark/FreshStack_mteb",
+        reference="https://huggingface.co/datasets/embedding-benchmark/FreshStack",
         dataset={
-            "path": "embedding-benchmark/FreshStack_mteb",
-            "revision": "main",
+            "path": "embedding-benchmark/FreshStack",
+            "revision": "53ce890",
         },
         type="Retrieval",
         category="s2p",
@@ -34,10 +34,6 @@ class FreshStackRetrieval(AbsTaskRetrieval):
         if self.data_loaded:
             return
 
-        self.corpus = {}
-        self.queries = {}
-        self.relevant_docs = {}
-
         from datasets import load_dataset
 
         # Load the three configurations
@@ -57,19 +53,29 @@ class FreshStackRetrieval(AbsTaskRetrieval):
             revision=self.metadata.dataset["revision"],
         )["test"]
 
+        # Initialize data structures with 'test' split
+        corpus = {}
+        queries = {}
+        relevant_docs = {}
+
         # Process corpus
         for item in corpus_ds:
-            self.corpus[item["id"]] = {"title": "", "text": item["text"]}
+            corpus[item["id"]] = {"title": "", "text": item["text"]}
 
         # Process queries
         for item in queries_ds:
-            self.queries[item["id"]] = item["text"]
+            queries[item["id"]] = item["text"]
 
         # Process qrels (relevant documents)
         for item in qrels_ds:
             query_id = item["query-id"]
-            if query_id not in self.relevant_docs:
-                self.relevant_docs[query_id] = {}
-            self.relevant_docs[query_id][item["corpus-id"]] = item["score"]
+            if query_id not in relevant_docs:
+                relevant_docs[query_id] = {}
+            relevant_docs[query_id][item["corpus-id"]] = int(item["score"])
+
+        # Organize data by splits as expected by MTEB
+        self.corpus = {"test": corpus}
+        self.queries = {"test": queries}
+        self.relevant_docs = {"test": relevant_docs}
 
         self.data_loaded = True
