@@ -112,6 +112,7 @@ from .fas.BEIRFa import *
 from .fas.FaMTEBRetrieval import *
 from .fra.AlloprofRetrieval import *
 from .fra.BSARDRetrieval import *
+from .fra.CUREv1FrRetrieval import *
 from .fra.FQuADRetrieval import *
 from .fra.SyntecRetrieval import *
 from .hun.HunSum2 import *
