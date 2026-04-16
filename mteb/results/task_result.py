@@ -482,10 +482,22 @@ class TaskResult(BaseModel):  # noqa: PLR0904
                     if main_score in hf_subset_scores:
                         hf_subset_scores["main_score"] = hf_subset_scores[main_score]
                     else:
-                        msg = f"Main score {main_score} not found in scores"
-                        logger.warning(msg)
-                        warnings.warn(msg)
-                        hf_subset_scores["main_score"] = None
+                        # Try to infer from old-format results where e.g.
+                        # "map" was stored instead of "map_at_1000"
+                        base_metric = (
+                            main_score.split("_at_")[0]
+                            if "_at_" in main_score
+                            else None
+                        )
+                        if base_metric and base_metric in hf_subset_scores:
+                            hf_subset_scores["main_score"] = hf_subset_scores[
+                                base_metric
+                            ]
+                        else:
+                            msg = f"Main score {main_score} not found in scores"
+                            logger.warning(msg)
+                            warnings.warn(msg)
+                            hf_subset_scores["main_score"] = None
 
         # specific fixes:
         if task_name == "MLSUMClusteringP2P" and mteb_version in [  # noqa: PLR6201
