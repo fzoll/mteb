@@ -26,5 +26,5 @@ class JapaneseLegal1Retrieval(AbsTaskRetrieval):
         sample_creation="found",
         bibtex_citation="",
         is_public=False,
-        contributed_by="Voyage AI",
+        contributed_by="Voyage AI by MongoDB",
     )
