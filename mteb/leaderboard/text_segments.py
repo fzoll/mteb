@@ -55,6 +55,6 @@ ACKNOWLEDGEMENT = """
     </a>
 </div>
 
-  <p style="margin-top: 5px; font-size: 0.8em;">We also thank the following companies which provide API credits to evaluate their models: <a href="https://openai.com/">OpenAI</a>, <a href="https://www.voyageai.com/">Voyage AI</a></p>
+  <p style="margin-top: 5px; font-size: 0.8em;">We also thank the following companies which provide API credits to evaluate their models: <a href="https://openai.com/">OpenAI</a>, <a href="https://www.voyageai.com/">Voyage AI by MongoDB</a></p>
 </div>
 """

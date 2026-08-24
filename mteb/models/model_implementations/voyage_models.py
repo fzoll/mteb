@@ -355,6 +355,9 @@ model_prompts = {
     PromptType.document.value: "document",
 }
 
+# Voyage AI has been part of MongoDB since February 2025. The HuggingFace org, the
+# `voyageai` client package and the API model ids are unchanged, so model names and
+# loaders below stay as-is; only the vendor attribution is updated.
 voyage_4_large_2048d_evolved = ModelMeta(
     name="voyageai/voyage-4-large (embed_dim=2048, evolved_prompts=True)",
     model_type=["dense"],
