@@ -47,7 +47,7 @@ build-docs-overview:
 
 serve-docs:
 	@echo "--- 📚 Serving documentation ---"
-	uv run --no-sync --group docs zensical serve
+	uv run --no-sync --group docs zensical serve --strict
 
 
 model-load-test:
